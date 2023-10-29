@@ -1,35 +1,39 @@
 /* eslint-disable prettier/prettier */ 
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+import { 
+  Column, 
+  CreateDateColumn, 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  UpdateDateColumn 
+} from "typeorm";
  
-@Entity({name: 'user'})
-export class UserEntity {
+@Entity({name: 'usuario'})
+export class UsuarioEntity {
   
   @PrimaryGeneratedColumn('rowid')
   id: number;
 
-  @Column({ name: 'name', nullable: false })
-  name: string;
+  @Column({ name: 'nome', nullable: false })
+  nome: string;
 
   @Column({ name: 'email', nullable: false })
   email: string;
+ 
+  @Column({ name: 'nuit', nullable: false })
+  nuit: string;
 
-  @Column({ name: 'phone' })
-  phone: string;
+  @Column({ name: 'senha', nullable: false })
+  senha: string;
 
-  @Column({ name: 'vat', nullable: false })
-  vat: string;
+  @Column({ name: 'tipo_usuario', nullable: false })
+  tipoUsuario: number;
 
-  @Column({ name: 'password', nullable: false })
-  password: string;
+  @CreateDateColumn({ name: 'data_cadastro' })
+  dataCadastro: Date;
 
-  @Column({ name: 'type_user', nullable: false })
-  typeUser: number;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  @UpdateDateColumn({ name: 'data_atualiza' })
+  dataAtualiza: Date;
 
 //   @OneToMany(() => AddressEntity, (address) => address.user)
 //   addresses?: AddressEntity[];
