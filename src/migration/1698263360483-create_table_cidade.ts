@@ -5,10 +5,10 @@ export class CreateTableCidade1698263360483 implements MigrationInterface {
     queryRunner.query(`
                 CREATE TABLE cidade ( 
                   id SERIAL PRIMARY KEY,
+                  nome VARCHAR(100) NOT NULL,
                   id_pais INT NOT NULL,
-                  nome VARCHAR(45) NOT NULL,
                   data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
-                  data_atualiza TIMESTAMP DEFAULT now() NOT NULL, 
+                  data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL,
     
                   FOREIGN KEY (id_pais) REFERENCES pais (id));
          

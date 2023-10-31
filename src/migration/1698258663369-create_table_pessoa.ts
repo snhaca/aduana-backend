@@ -15,8 +15,8 @@ export class CreateTablePessoa1698258663369 implements MigrationInterface {
               contador VARCHAR(1) NOT NULL,
               exportador VARCHAR(1) NOT NULL,
               importador VARCHAR(1) NOT NULL,
-              data_cadastro TIMESTAMP WITHOUT TIME ZONE DEFAULT now() NOT NULL,
-              data_atualiza TIMESTAMP DEFAULT now() NOT NULL);
+              data_cadastro TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+              data_atualiza TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL);
       
             CREATE SEQUENCE public.id_pessoa_seq
                 AS integer

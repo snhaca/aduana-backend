@@ -9,14 +9,12 @@ export class CreateTablePessoaEndereco1698263384558
                   id INTEGER PRIMARY KEY,
                   id_pessoa INT NOT NULL,
                   id_cidade INT NOT NULL,
-                  logradouro VARCHAR(100) NOT NULL,
-                  numero VARCHAR(45) DEFAULT null,
+                  complemento VARCHAR(200) NOT NULL,
+                  numero INT DEFAULT null,
                   bairro VARCHAR(100) DEFAULT null,
-                  quarteirao VARCHAR(45) DEFAULT null,
-                  cidade VARCHAR(45) DEFAULT null,
-                  municipio VARCHAR(45) DEFAULT null,
+                  quarteirao VARCHAR(45) DEFAULT null, 
                   data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
-                  data_atualiza TIMESTAMP DEFAULT now() NOT NULL, 
+                  data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL, 
          
                   FOREIGN KEY (id_pessoa) REFERENCES public.pessoa (id),
                   FOREIGN KEY (id_cidade) REFERENCES public.cidade (id));

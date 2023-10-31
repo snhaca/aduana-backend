@@ -11,8 +11,8 @@ export class CreateTablePessoaContato1698258867506
               nome VARCHAR(45) NOT NULL,
               email VARCHAR(45) DEFAULT null,
               observacao VARCHAR(45) DEFAULT null,
-              data_cadastro TIMESTAMP WITHOUT TIME ZONE DEFAULT now() NOT NULL,
-              data_atualiza TIMESTAMP DEFAULT now() NOT NULL, 
+              data_cadastro TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+              data_atualiza TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
     
               FOREIGN KEY (id_pessoa) REFERENCES public.pessoa (id));
       

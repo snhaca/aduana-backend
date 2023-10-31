@@ -7,9 +7,10 @@ export class CreateTableExportador1698258991312 implements MigrationInterface {
               id SERIAL PRIMARY KEY,
               id_pessoa INT NOT NULL,
               numero_exportador VARCHAR(45) DEFAULT null,
-              descricao VARCHAR(100) DEFAULT null,
+              observacao VARCHAR(250) DEFAULT null,
+              desde DATE DEFAULT null,
               data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
-		          data_atualiza TIMESTAMP DEFAULT now() NOT NULL,
+		          data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL,
 
               FOREIGN KEY (id_pessoa) REFERENCES pessoa (id));    
             

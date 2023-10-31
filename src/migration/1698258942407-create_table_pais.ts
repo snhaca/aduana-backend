@@ -6,9 +6,9 @@ export class CreateTablePais1698258942407 implements MigrationInterface {
             CREATE TABLE pais ( 
                 id SERIAL PRIMARY KEY,
                 nome VARCHAR(100) DEFAULT null,
-                codigo VARCHAR(2) DEFAULT null,
-                data_cadastro TIMESTAMP WITHOUT TIME ZONE DEFAULT now() NOT NULL,
-                data_atualiza TIMESTAMP DEFAULT now() NOT NULL
+                codigo VARCHAR(3) DEFAULT null,
+                data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
+                data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL
                 );
             
             CREATE SEQUENCE public.id_pais_seq

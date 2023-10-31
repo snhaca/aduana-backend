@@ -11,7 +11,7 @@ export class CreateTablePessoaTelefone1698258883895
               tipo VARCHAR(45) NOT NULL,
               numero VARCHAR(45) NOT NULL,
               data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
-		          data_atualiza TIMESTAMP DEFAULT now() NOT NULL, 
+		          data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL, 
 
               FOREIGN KEY (id_pessoa) REFERENCES pessoa (id));
      

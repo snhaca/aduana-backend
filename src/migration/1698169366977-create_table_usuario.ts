@@ -11,7 +11,7 @@ export class CreateTableUsuario1698169366977 implements MigrationInterface {
 		  email VARCHAR(150) NOT NULL,
 		  senha VARCHAR(100) NOT NULL,
 		  data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
-		  data_atualiza TIMESTAMP DEFAULT now() NOT NULL);
+		  data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL);
 		
 		CREATE SEQUENCE public.id_usuario_seq
 			AS integer

@@ -8,6 +8,7 @@ import { ColaboradorContatoModule } from './colaborador_contato/colaborador_cont
 import { PessoaEnderecoModule } from './pessoa_endereco/pessoa_endereco.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CacheModule } from './cache/cache.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ColaboradorModule,
     ColaboradorContatoModule,
     PessoaEnderecoModule,
+    CacheModule,
   ],
   controllers: [],
   providers: [],
