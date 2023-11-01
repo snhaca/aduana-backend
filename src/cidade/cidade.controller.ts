@@ -10,6 +10,6 @@ export class CidadeController {
   async findAllCidades(
     @Param('idPais') idPais: number,
   ): Promise<CidadeEntity[]> {
-    return this.cidadeService.findAllCidadesByPaisId(idPais);
+    return this.cidadeService.findAllCidadesByIdPais(idPais);
   }
 }

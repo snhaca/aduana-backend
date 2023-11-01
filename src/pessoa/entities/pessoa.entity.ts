@@ -34,14 +34,14 @@ export class PessoaEntity {
   @Column({ name: 'contador' })
   contador: string;
 
-  @Column({ name: 'phone' })
+  @Column({ name: 'transportador' })
   transportador: string;
 
   @CreateDateColumn({ name: 'data_cadastro' })
   dataCadastro: Date;
 
-  @UpdateDateColumn({ name: 'data_atualizacao' })
-  dataAtualizacao: Date;
+  @UpdateDateColumn({ name: 'data_atualiza' })
+  dataAtualiza: Date;
 
 //   @OneToMany(() => AddressEntity, (address) => address.user)
 //   addresses?: AddressEntity[];

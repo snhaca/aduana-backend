@@ -32,8 +32,8 @@ export class PessoaEnderecoEntity {
   @CreateDateColumn({ name: 'data_cadastro' })
   dataCadastro: Date;
 
-  @UpdateDateColumn({ name: 'data_atualizacao' })
-  dataAtualizacao: Date;
+  @UpdateDateColumn({ name: 'data_atualiza' })
+  dataAtualiza: Date;
   
 //   @ManyToOne(() => UserEntity, (user) => user.addresses)
 //   @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
