@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { PessoaEntity } from "../entities/pessoa.entity";
+import { ReturnPessoaEnderecoDTO } from "src/pessoa_endereco/dtos/return-pessoa-endereco.dto";
+import { PessoaEntity } from "../entities/pessoa.entity"; 
 
 export class ReturnPessoaDTO {
   id: number;
@@ -13,6 +14,7 @@ export class ReturnPessoaDTO {
   exportador: string;  
   contador: string;  
   transportador: string;  
+  enderecos?: ReturnPessoaEnderecoDTO[];
 
   constructor(pessoaEntity: PessoaEntity) {
     this.id = pessoaEntity.id;
@@ -26,5 +28,9 @@ export class ReturnPessoaDTO {
     this.exportador = pessoaEntity.exportador;  
     this.contador = pessoaEntity.contador;  
     this.transportador = pessoaEntity.transportador;  
+
+    this.enderecos = pessoaEntity.enderecos 
+    ? pessoaEntity.enderecos.map((endereco) => new ReturnPessoaEnderecoDTO(endereco)) 
+    : undefined;
   }
 }

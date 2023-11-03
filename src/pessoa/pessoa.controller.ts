@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -27,6 +28,15 @@ export class PessoaController {
   async findPessoas(): Promise<ReturnPessoaDTO[]> {
     return (await this.pessoaoService.findPessoas()).map(
       (pessoaoEntity) => new ReturnPessoaDTO(pessoaoEntity),
+    );
+  }
+
+  @Get('/:idPessoa')
+  async getUserById(
+    @Param('idPessoa') idPessoa: number,
+  ): Promise<ReturnPessoaDTO> {
+    return new ReturnPessoaDTO(
+      await this.pessoaoService.findPessoaByIdUsingRelations(idPessoa),
     );
   }
 }

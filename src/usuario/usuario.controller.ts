@@ -24,8 +24,8 @@ export class UsuarioController {
   }
 
   @Get()
-  async buscarUsuarios(): Promise<ReturnUsuarioDTO[]> {
-    return (await this.usuarioService.buscarUsuarios()).map(
+  async findUsuarios(): Promise<ReturnUsuarioDTO[]> {
+    return (await this.usuarioService.findUsuarios()).map(
       (usuarioEntity) => new ReturnUsuarioDTO(usuarioEntity),
     );
   }

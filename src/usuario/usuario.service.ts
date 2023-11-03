@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDTO } from './dtos/create-usuario.dto';
 import { UsuarioEntity } from './entities/usuario.entity';
 import { hash } from 'bcrypt';
@@ -26,7 +26,21 @@ export class UsuarioService {
     });
   }
 
-  async buscarUsuarios(): Promise<UsuarioEntity[]> {
+  async findUsuarios(): Promise<UsuarioEntity[]> {
     return this.usuarioRepository.find();
+  }
+
+  async findUserById(idUsuario: number): Promise<UsuarioEntity> {
+    const usuario = await this.usuarioRepository.findOne({
+      where: {
+        id: idUsuario,
+      },
+    });
+
+    if (!usuario) {
+      throw new NotFoundException(`Id Usuario: ${idUsuario} Not Found`);
+    }
+
+    return usuario;
   }
 }

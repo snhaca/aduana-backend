@@ -1,9 +1,13 @@
 /* eslint-disable prettier/prettier */
-
+ 
+import { CidadeEntity } from "src/cidade/entities/cidade.entity";
+import { PessoaEntity } from "src/pessoa/entities/pessoa.entity";
 import { Entity, PrimaryGeneratedColumn, 
     Column,
     CreateDateColumn,
-    UpdateDateColumn, 
+    UpdateDateColumn,
+    JoinColumn,
+    ManyToOne, 
 } from "typeorm";
 
 @Entity({ name: 'pessoa_endereco' })
@@ -34,15 +38,12 @@ export class PessoaEnderecoEntity {
 
   @UpdateDateColumn({ name: 'data_atualiza' })
   dataAtualiza: Date;
-  
-//   @ManyToOne(() => UserEntity, (user) => user.addresses)
-//   @JoinColumn({name: 'user_id', referencedColumnName: 'id'})
-//   user?: UserEntity
 
-//   @ManyToOne(() => CityEntity, (city) => city.addresses)
-//   @JoinColumn({ name: 'city_id', referencedColumnName: 'id' })
-//   city?: CityEntity;
-  
-//   @OneToMany(() => OrderEntity, (order) => order.address)
-//   orders?: OrderEntity[];
+  @ManyToOne(() => PessoaEntity, (pessoa) => pessoa.enderecos)
+  @JoinColumn({name: 'id_pessoa', referencedColumnName: 'id'})
+  pessoa?: PessoaEntity;
+
+  @ManyToOne(() => CidadeEntity, (cidade) => cidade.enderecos)
+  @JoinColumn({name: 'id_cidade', referencedColumnName: 'id'})
+  cidade?: CidadeEntity;
 }

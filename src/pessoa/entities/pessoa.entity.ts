@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */ 
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PessoaEnderecoEntity } from "src/pessoa_endereco/entities/pessoa_endereco.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
  
 @Entity({name: 'pessoa'})
 export class PessoaEntity {
@@ -43,9 +44,6 @@ export class PessoaEntity {
   @UpdateDateColumn({ name: 'data_atualiza' })
   dataAtualiza: Date;
 
-//   @OneToMany(() => AddressEntity, (address) => address.user)
-//   addresses?: AddressEntity[];
-  
-//   @OneToMany(() => OrderEntity, (order) => order.address)
-//   orders?: OrderEntity[];
+  @OneToMany(() => PessoaEnderecoEntity, (endereco) => endereco.pessoa)
+  enderecos?: PessoaEnderecoEntity[]; 
 }

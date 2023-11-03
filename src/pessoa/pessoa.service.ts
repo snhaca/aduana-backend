@@ -21,6 +21,21 @@ export class PessoaService {
     return this.pessoaRepository.find();
   }
 
+  async findPessoaByIdUsingRelations(idPessoa: number): Promise<PessoaEntity> {
+    return this.pessoaRepository.findOne({
+      where: {
+        id: idPessoa,
+      },
+      relations: {
+        enderecos: {
+          cidade: {
+            pais: true,
+          },
+        },
+      },
+    });
+  }
+
   async findPessoaById(idPessoa: number): Promise<PessoaEntity> {
     const pessoa = await this.pessoaRepository.findOne({
       where: {
