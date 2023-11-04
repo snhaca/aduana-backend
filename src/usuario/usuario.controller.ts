@@ -6,10 +6,10 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateUsuarioDTO } from './dtos/create-usuario.dto';
 import { UsuarioService } from './usuario.service';
 import { UsuarioEntity } from './entities/usuario.entity';
-import { ReturnUsuarioDTO } from './dtos/return-usuario.dto';
+import { ReturnUsuario } from './dtos/return-usuario.dto';
+import { CreateUsuario } from './dtos/create-usuario.dto';
 
 @Controller('usuario')
 export class UsuarioController {
@@ -18,15 +18,15 @@ export class UsuarioController {
   @UsePipes(ValidationPipe)
   @Post()
   async createUsuario(
-    @Body() createUsuario: CreateUsuarioDTO,
+    @Body() createUsuario: CreateUsuario,
   ): Promise<UsuarioEntity> {
     return this.usuarioService.createUsuario(createUsuario);
   }
 
   @Get()
-  async findUsuarios(): Promise<ReturnUsuarioDTO[]> {
+  async findUsuarios(): Promise<ReturnUsuario[]> {
     return (await this.usuarioService.findUsuarios()).map(
-      (usuarioEntity) => new ReturnUsuarioDTO(usuarioEntity),
+      (usuarioEntity) => new ReturnUsuario(usuarioEntity),
     );
   }
 }

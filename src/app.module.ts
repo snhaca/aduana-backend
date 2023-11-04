@@ -9,6 +9,8 @@ import { PessoaEnderecoModule } from './pessoa_endereco/pessoa_endereco.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from './cache/cache.module';
+import { ClienteModule } from './cliente/cliente.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { CacheModule } from './cache/cache.module';
     ColaboradorContatoModule,
     PessoaEnderecoModule,
     CacheModule,
+    ClienteModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

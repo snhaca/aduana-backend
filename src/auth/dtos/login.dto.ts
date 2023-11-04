@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { IsString } from 'class-validator';
 
-export class UpdateSenha {
+export class Login {
   @IsString()
-  novaSenha: string;
+  email: string;
 
   @IsString()
-  ultimaSenha: string;
+  senha: string;
 }

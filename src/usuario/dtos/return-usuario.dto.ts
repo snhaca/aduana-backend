@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */ 
 import { UsuarioEntity } from '../entities/usuario.entity';
 
-export class ReturnUsuarioDTO {
+export class ReturnUsuario {
   id: number;
   nome: string;
   email: string; 

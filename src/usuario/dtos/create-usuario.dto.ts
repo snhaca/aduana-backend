@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { IsString } from "class-validator";
 
-export class CreateUsuarioDTO {
+export class CreateUsuario {
   @IsString()
   nome: string;
 

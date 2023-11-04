@@ -9,12 +9,12 @@ export class CreateTablePessoa1698258663369 implements MigrationInterface {
               nuit VARCHAR(45) NOT NULL, 
               email VARCHAR(45) DEFAULT null,
               site VARCHAR(45) DEFAULT null,
-              cliente VARCHAR(1) NOT NULL,
-              fornecedor VARCHAR(1) NOT NULL,
-              transportador VARCHAR(1) NOT NULL,
-              contador VARCHAR(1) NOT NULL,
-              exportador VARCHAR(1) NOT NULL,
-              importador VARCHAR(1) NOT NULL,
+              eh_cliente VARCHAR(1) NOT NULL,
+              eh_fornecedor VARCHAR(1) NOT NULL,
+              eh_transportador VARCHAR(1) NOT NULL,
+              eh_contador VARCHAR(1) NOT NULL,
+              eh_exportador VARCHAR(1) NOT NULL,
+              eh_importador VARCHAR(1) NOT NULL,
               data_cadastro TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
               data_atualiza TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL);
       

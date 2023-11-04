@@ -8,12 +8,12 @@ export class ReturnPessoaDTO {
   email: string; 
   nuit: string;  
   site: string;  
-  cliente: string;  
-  fornecedor: string;  
-  importador: string;  
-  exportador: string;  
-  contador: string;  
-  transportador: string;  
+  ehCliente: string;  
+  ehFornecedor: string;  
+  ehImportador: string;  
+  ehExportador: string;  
+  ehContador: string;  
+  ehTransportador: string;  
   enderecos?: ReturnPessoaEnderecoDTO[];
 
   constructor(pessoaEntity: PessoaEntity) {
@@ -22,12 +22,12 @@ export class ReturnPessoaDTO {
     this.email = pessoaEntity.email; 
     this.nuit = pessoaEntity.nuit;  
     this.site = pessoaEntity.site;  
-    this.cliente = pessoaEntity.cliente;  
-    this.fornecedor = pessoaEntity.fornecedor;  
-    this.importador = pessoaEntity.importador;  
-    this.exportador = pessoaEntity.exportador;  
-    this.contador = pessoaEntity.contador;  
-    this.transportador = pessoaEntity.transportador;  
+    this.ehCliente = pessoaEntity.ehCliente;  
+    this.ehFornecedor = pessoaEntity.ehFornecedor;  
+    this.ehImportador = pessoaEntity.ehImportador;  
+    this.ehExportador = pessoaEntity.ehExportador;  
+    this.ehContador = pessoaEntity.ehContador;  
+    this.ehTransportador = pessoaEntity.ehTransportador;  
 
     this.enderecos = pessoaEntity.enderecos 
     ? pessoaEntity.enderecos.map((endereco) => new ReturnPessoaEnderecoDTO(endereco)) 

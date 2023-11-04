@@ -20,23 +20,23 @@ export class PessoaEntity {
   @Column({ name: 'site', nullable: false })
   site: string;
 
-  @Column({ name: 'cliente' })
-  cliente: string;
+  @Column({ name: 'eh_cliente' })
+  ehCliente: string;
  
-  @Column({ name: 'fornecedor' })
-  fornecedor: string;
+  @Column({ name: 'eh_fornecedor' })
+  ehFornecedor: string;
 
-  @Column({ name: 'importador' })
-  importador: string;
+  @Column({ name: 'eh_importador' })
+  ehImportador: string;
 
-  @Column({ name: 'exportador' })
-  exportador: string;
+  @Column({ name: 'eh_exportador' })
+  ehExportador: string;
 
-  @Column({ name: 'contador' })
-  contador: string;
+  @Column({ name: 'eh_contador' })
+  ehContador: string;
 
-  @Column({ name: 'transportador' })
-  transportador: string;
+  @Column({ name: 'eh_transportador' })
+  ehTransportador: string;
 
   @CreateDateColumn({ name: 'data_cadastro' })
   dataCadastro: Date;
@@ -46,4 +46,7 @@ export class PessoaEntity {
 
   @OneToMany(() => PessoaEnderecoEntity, (endereco) => endereco.pessoa)
   enderecos?: PessoaEnderecoEntity[]; 
+
+  // @OneToOne(() => ClienteEntity, (cliente) => cliente.pessoa)
+  // cliente?: ClienteEntity;
 }
