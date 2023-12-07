@@ -1,54 +1,62 @@
 import {
+  BadGatewayException,
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UsuarioEntity } from './entities/usuario.entity';
+import { Usuario } from './entities/usuario.entity';
 import { hash } from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateSenha } from './dtos/update-senha.dto';
 import { createPasswordHashed, validatePassword } from 'src/utils/password';
 import { CreateUsuario } from './dtos/create-usuario.dto';
+import { TipoUsuario } from './enum/tipo-usuario.enum';
 
 @Injectable()
 export class UsuarioService {
   constructor(
-    @InjectRepository(UsuarioEntity)
-    private readonly usuarioRepository: Repository<UsuarioEntity>,
+    @InjectRepository(Usuario)
+    private readonly usuarioRepository: Repository<Usuario>,
   ) {}
 
-  async createUsuario(createUsuario: CreateUsuario): Promise<UsuarioEntity> {
+  async create(create: CreateUsuario): Promise<Usuario> {
+    const usuario = await this.findByEmail(create.email).catch(() => undefined);
+
+    if (usuario) {
+      throw new BadGatewayException('email já existe no sistema');
+    }
+
     const saltOrRounds = 10;
 
-    const passwordHashed = await hash(createUsuario.senha, saltOrRounds);
+    const passwordHashed = await hash(create.senha, saltOrRounds);
 
     return this.usuarioRepository.save({
-      ...createUsuario,
-      tipoUsuario: 1,
+      ...create,
+      tipoUsuario: TipoUsuario.Usuario,
       senha: passwordHashed,
     });
   }
 
-  async findUsuarios(): Promise<UsuarioEntity[]> {
+  async findAll(): Promise<Usuario[]> {
     return this.usuarioRepository.find();
   }
 
-  async findUserById(idUsuario: number): Promise<UsuarioEntity> {
+  async findOne(id: number): Promise<Usuario> {
     const usuario = await this.usuarioRepository.findOne({
       where: {
-        id: idUsuario,
+        id,
       },
     });
 
     if (!usuario) {
-      throw new NotFoundException(`Id Usuario: ${idUsuario} Not Found`);
+      throw new NotFoundException(`Id Usuario: ${id} Não encontrado`);
     }
 
     return usuario;
   }
 
-  async findUsuarioByEmail(email: string): Promise<UsuarioEntity> {
+  async findByEmail(email: string): Promise<Usuario> {
     const usuario = await this.usuarioRepository.findOne({
       where: {
         email,
@@ -56,7 +64,7 @@ export class UsuarioService {
     });
 
     if (!usuario) {
-      throw new NotFoundException(`Email: ${email} Not Found`);
+      throw new NotFoundException(`Email: ${email} Não encontrado`);
     }
 
     return usuario;
@@ -65,8 +73,8 @@ export class UsuarioService {
   async updatePasswordUser(
     updateSenha: UpdateSenha,
     idUsuario: number,
-  ): Promise<UsuarioEntity> {
-    const usuario = await this.findUserById(idUsuario);
+  ): Promise<Usuario> {
+    const usuario = await this.findOne(idUsuario);
 
     const passwordHashed = await createPasswordHashed(updateSenha.novaSenha);
 
@@ -76,7 +84,7 @@ export class UsuarioService {
     );
 
     if (!isMatch) {
-      throw new BadRequestException('Ultima senha invalid');
+      throw new BadRequestException('Última senha inválida');
     }
 
     return this.usuarioRepository.save({

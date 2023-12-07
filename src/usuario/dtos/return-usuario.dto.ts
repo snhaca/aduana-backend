@@ -1,16 +1,14 @@
 /* eslint-disable prettier/prettier */ 
-import { UsuarioEntity } from '../entities/usuario.entity';
+import { Usuario } from '../entities/usuario.entity';
 
 export class ReturnUsuario {
   id: number;
   nome: string;
-  email: string; 
-  nuit: string;  
+  email: string;   
 
-  constructor(usuarioEntity: UsuarioEntity) {
-    this.id = usuarioEntity.id;
-    this.nome = usuarioEntity.nome;
-    this.email = usuarioEntity.email; 
-    this.nuit = usuarioEntity.nuit;  
+  constructor(usuario: Usuario) {
+    this.id = usuario.id;
+    this.nome = usuario.nome;
+    this.email = usuario.email;   
   }
 }

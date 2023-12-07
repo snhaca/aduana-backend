@@ -5,10 +5,9 @@ export class CreateTableUsuario1698169366977 implements MigrationInterface {
     queryRunner.query(`
 		CREATE TABLE IF NOT EXISTS usuario ( 
 		  id SERIAL PRIMARY KEY, 
-		  tipo_usuario VARCHAR(5) NOT NULL,
-		  nuit VARCHAR(11) NOT NULL,
+		  tipo_usuario VARCHAR(5) NOT NULL, 
 		  nome VARCHAR(200) NOT NULL,
-		  email VARCHAR(150) NOT NULL,
+		  email VARCHAR(150) UNIQUE NOT NULL,
 		  senha VARCHAR(100) NOT NULL,
 		  data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
 		  data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL);

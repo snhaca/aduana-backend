@@ -1,30 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PessoaEnderecoEntity } from './entities/pessoa_endereco.entity';
+import { PessoaEndereco } from './entities/pessoa_endereco.entity';
 import { Repository } from 'typeorm';
-import { CreatePessoaEnderecoDTO } from './dtos/create-pessoa-endereco.dto';
 import { PessoaService } from 'src/pessoa/pessoa.service';
 import { CidadeService } from 'src/cidade/cidade.service';
+import { CreatePessoaEndereco } from './dtos/create-pessoa-endereco.dto';
 
 @Injectable()
 export class PessoaEnderecoService {
   constructor(
-    @InjectRepository(PessoaEnderecoEntity)
-    private readonly enderecoRepository: Repository<PessoaEnderecoEntity>,
+    @InjectRepository(PessoaEndereco)
+    private readonly enderecoRepository: Repository<PessoaEndereco>,
     private readonly pessoaService: PessoaService,
     private readonly cidadeService: CidadeService,
   ) {}
 
-  async createPessoaEndereco(
-    createPessoaEnderecoDTO: CreatePessoaEnderecoDTO,
-    idPessoa: number,
-  ): Promise<PessoaEnderecoEntity> {
-    await this.pessoaService.findPessoaById(idPessoa);
-    await this.cidadeService.findCidadeById(createPessoaEnderecoDTO.idCidade);
+  async create(create: CreatePessoaEndereco): Promise<PessoaEndereco> {
+    await this.pessoaService.findOne(create.idPessoa);
+    await this.cidadeService.findOne(create.idCidade);
 
     return this.enderecoRepository.save({
-      ...createPessoaEnderecoDTO,
-      idPessoa,
+      ...create,
     });
+  }
+
+  async findAllByIdPessoa(idPessoa: number): Promise<PessoaEndereco[]> {
+    const enderecos = await this.enderecoRepository.find({
+      where: {
+        idPessoa,
+      },
+      relations: {
+        pessoa: {
+          pEnderecos: {
+            cidade: {
+              pais: true,
+            },
+          },
+        },
+      },
+    });
+
+    if (!enderecos || enderecos.length === 0) {
+      throw new NotFoundException(
+        `Endereço não encontrado para o Id Pessoa: ${idPessoa}`,
+      );
+    }
+
+    return enderecos;
   }
 }

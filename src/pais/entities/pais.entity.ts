@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 
-import { CidadeEntity } from "src/cidade/entities/cidade.entity";
+import { Cidade } from "src/cidade/entities/cidade.entity";
 import { Entity, PrimaryGeneratedColumn, 
     Column,
     OneToMany,  
 } from "typeorm";
 
 @Entity({ name: 'pais' })
-export class PaisEntity {
+export class Pais {
   @PrimaryGeneratedColumn('rowid')
   id: number; 
 
@@ -17,6 +17,6 @@ export class PaisEntity {
   @Column({ name: 'codigo', nullable: false })
   codigo: string;  
 
-  @OneToMany(() => CidadeEntity, (cidade) => cidade.pais)
-  cidades?: CidadeEntity[];
+  @OneToMany(() => Cidade, (cidade) => cidade.pais)
+  cidades?: Cidade[];
 }

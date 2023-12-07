@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { PaisEntity } from "../entities/pais.entity";
+import { Pais } from "../entities/pais.entity";
 
- export class ReturnPaisDTO { 
+ export class ReturnPais { 
     nome: string;
 
-    constructor(pais: PaisEntity) { 
+    constructor(pais: Pais) { 
         this.nome = pais.nome;
     }
 }

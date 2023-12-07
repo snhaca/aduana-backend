@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { IsInt, IsOptional, IsString } from "class-validator";
 
-export class CreatePessoaEnderecoDTO {
+export class CreatePessoaEndereco {
   @IsString()
   complemento: string;
 
@@ -16,6 +16,9 @@ export class CreatePessoaEnderecoDTO {
   @IsString()
   @IsOptional()
   quarteirao: string; 
+
+  @IsInt() 
+  idPessoa: number;
 
   @IsInt() 
   idCidade: number;

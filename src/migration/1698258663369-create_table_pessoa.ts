@@ -5,11 +5,12 @@ export class CreateTablePessoa1698258663369 implements MigrationInterface {
     queryRunner.query(`
             CREATE TABLE pessoa ( 
               id INTEGER PRIMARY KEY, 
-              nome VARCHAR(45) NOT NULL,
+              nome VARCHAR(150) NOT NULL,
               nuit VARCHAR(45) NOT NULL, 
-              email VARCHAR(45) DEFAULT null,
-              site VARCHAR(45) DEFAULT null,
+              email VARCHAR(100) UNIQUE DEFAULT NULL,
+              site VARCHAR(45) DEFAULT NULL,
               eh_cliente VARCHAR(1) NOT NULL,
+              eh_colaborador VARCHAR(1) NOT NULL,
               eh_fornecedor VARCHAR(1) NOT NULL,
               eh_transportador VARCHAR(1) NOT NULL,
               eh_contador VARCHAR(1) NOT NULL,

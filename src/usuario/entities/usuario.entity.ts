@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */ 
-
 import { 
   Column, 
   CreateDateColumn, 
@@ -9,7 +8,7 @@ import {
 } from "typeorm";
  
 @Entity({name: 'usuario'})
-export class UsuarioEntity {
+export class Usuario {
   
   @PrimaryGeneratedColumn('rowid')
   id: number;
@@ -19,10 +18,7 @@ export class UsuarioEntity {
 
   @Column({ name: 'email', nullable: false })
   email: string;
- 
-  @Column({ name: 'nuit', nullable: false })
-  nuit: string;
-
+  
   @Column({ name: 'senha', nullable: false })
   senha: string;
 
@@ -33,11 +29,5 @@ export class UsuarioEntity {
   dataCadastro: Date;
 
   @UpdateDateColumn({ name: 'data_atualiza' })
-  dataAtualiza: Date;
-
-//   @OneToMany(() => AddressEntity, (address) => address.user)
-//   addresses?: AddressEntity[];
-  
-//   @OneToMany(() => OrderEntity, (order) => order.address)
-//   orders?: OrderEntity[];
+  dataAtualiza: Date; 
 }

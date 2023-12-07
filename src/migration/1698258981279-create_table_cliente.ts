@@ -9,7 +9,7 @@ export class CreateTableCliente1698258981279 implements MigrationInterface {
               taxa_desconto DECIMAL(16,4) DEFAULT null,
               limite_credito DECIMAL(16,4) DEFAULT null,
               observacao VARCHAR(250) DEFAULT null,
-              desde DATE DEFAULT null,
+              desde TIMESTAMP with time zone  DEFAULT null,
               data_cadastro TIMESTAMP with time zone DEFAULT now() NOT NULL,
 		          data_atualiza TIMESTAMP with time zone DEFAULT now() NOT NULL,
 

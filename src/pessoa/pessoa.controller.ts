@@ -7,10 +7,10 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreatePessoaDTO } from './dtos/create-pessoa.dto';
+import { CreatePessoa } from './dtos/create-pessoa.dto';
 import { PessoaService } from './pessoa.service';
-import { PessoaEntity } from './entities/pessoa.entity';
-import { ReturnPessoaDTO } from './dtos/return-pessoa.dto';
+import { Pessoa } from './entities/pessoa.entity';
+import { ReturnPessoa } from './dtos/return-pessoa.dto';
 
 @Controller('pessoa')
 export class PessoaController {
@@ -18,25 +18,23 @@ export class PessoaController {
 
   @UsePipes(ValidationPipe)
   @Post()
-  async createPessoa(
-    @Body() createPessoa: CreatePessoaDTO,
-  ): Promise<PessoaEntity> {
-    return this.pessoaoService.createPessoa(createPessoa);
+  async create(@Body() create: CreatePessoa): Promise<Pessoa> {
+    return this.pessoaoService.create(create);
   }
 
   @Get()
-  async findPessoas(): Promise<ReturnPessoaDTO[]> {
-    return (await this.pessoaoService.findPessoas()).map(
-      (pessoaoEntity) => new ReturnPessoaDTO(pessoaoEntity),
+  async findAll(): Promise<ReturnPessoa[]> {
+    return (await this.pessoaoService.findAll()).map(
+      (pessoaoEntity) => new ReturnPessoa(pessoaoEntity),
     );
   }
 
   @Get('/:idPessoa')
-  async getUserById(
+  async findOneUsingRelations(
     @Param('idPessoa') idPessoa: number,
-  ): Promise<ReturnPessoaDTO> {
-    return new ReturnPessoaDTO(
-      await this.pessoaoService.findPessoaByIdUsingRelations(idPessoa),
+  ): Promise<ReturnPessoa> {
+    return new ReturnPessoa(
+      await this.pessoaoService.findOneUsingRelations(idPessoa),
     );
   }
 }

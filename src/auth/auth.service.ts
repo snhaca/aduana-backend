@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import { Login } from './dtos/login.dto';
 import { ReturnUsuario } from 'src/usuario/dtos/return-usuario.dto';
-import { UsuarioEntity } from 'src/usuario/entities/usuario.entity';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { validatePassword } from 'src/utils/password';
 import { ReturnLogin } from './dtos/return-login.dto';
 import { LoginPayload } from './dtos/login-payload.dto';
@@ -16,8 +16,8 @@ export class AuthService {
   ) {}
 
   async login(login: Login): Promise<ReturnLogin> {
-    const usuario: UsuarioEntity | undefined = await this.usuarioService
-      .findUsuarioByEmail(login.email)
+    const usuario: Usuario | undefined = await this.usuarioService
+      .findByEmail(login.email)
       .catch(() => undefined);
 
     const isMatch = await validatePassword(login.senha, usuario?.senha || '');

@@ -1,19 +1,19 @@
 /* eslint-disable prettier/prettier */ 
-import { ReturnCidadeDTO } from "src/cidade/dtos/return-cidade.dto";
-import { PessoaEnderecoEntity } from "../entities/pessoa_endereco.entity";
+import { ReturnCidade } from "src/cidade/dtos/return-cidade.dto";
+import { PessoaEndereco } from "../entities/pessoa_endereco.entity";
 
-export class ReturnPessoaEnderecoDTO { 
+export class ReturnPessoaEndereco { 
   complemento: string; 
   numero: number; 
   bairro: string; 
   quarteirao: string;  
-  cidade?: ReturnCidadeDTO
+  cidade?: ReturnCidade
 
-  constructor(endereco: PessoaEnderecoEntity){
+  constructor(endereco: PessoaEndereco){
     this.complemento = endereco.complemento;
     this.numero = endereco.numero;
     this.bairro = endereco.bairro;
     this.quarteirao = endereco.quarteirao;
-    this.cidade = endereco.cidade ? new ReturnCidadeDTO(endereco.cidade) : undefined;
+    this.cidade = endereco.cidade ? new ReturnCidade(endereco.cidade) : undefined;
   }
 }

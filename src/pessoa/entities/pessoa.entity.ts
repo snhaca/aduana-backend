@@ -1,9 +1,16 @@
-/* eslint-disable prettier/prettier */ 
-import { PessoaEnderecoEntity } from "src/pessoa_endereco/entities/pessoa_endereco.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+/* eslint-disable prettier/prettier */  
+import { Cliente } from "src/cliente/entities/cliente.entity"; 
+import { Colaborador } from "src/colaborador/entities/colaborador.entity";
+import { Exportador } from "src/exportador/entities/exportador.entity";
+import { Fornecedor } from "src/fornecedor/entities/fornecedor.entity";
+import { Importador } from "src/importador/entities/importador.entity";  
+import { PessoaContato } from "src/pessoa_contato/entities/pessoa-contato.entity";
+import { PessoaEndereco } from "src/pessoa_endereco/entities/pessoa_endereco.entity";
+import { PessoaTelefone } from "src/pessoa_telefone/entities/pessoa-telefone.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
  
 @Entity({name: 'pessoa'})
-export class PessoaEntity {
+export class Pessoa {
   
   @PrimaryGeneratedColumn('rowid')
   id: number;
@@ -20,6 +27,9 @@ export class PessoaEntity {
   @Column({ name: 'site', nullable: false })
   site: string;
 
+  @Column({ name: 'eh_colaborador' })
+  ehColaborador: string;
+ 
   @Column({ name: 'eh_cliente' })
   ehCliente: string;
  
@@ -44,9 +54,27 @@ export class PessoaEntity {
   @UpdateDateColumn({ name: 'data_atualiza' })
   dataAtualiza: Date;
 
-  @OneToMany(() => PessoaEnderecoEntity, (endereco) => endereco.pessoa)
-  enderecos?: PessoaEnderecoEntity[]; 
+  @OneToOne(() => Colaborador, (colaborador) => colaborador.pessoa)
+  colaborador?: Colaborador;
 
-  // @OneToOne(() => ClienteEntity, (cliente) => cliente.pessoa)
-  // cliente?: ClienteEntity;
+  @OneToOne(() => Cliente, (cliente) => cliente.pessoa)
+  cliente?: Cliente;
+
+  @OneToOne(() => Fornecedor, (fornecedor) => fornecedor.pessoa)
+  fornecedor?: Fornecedor;
+
+  @OneToOne(() => Exportador, (exportador) => exportador.pessoa)
+  exportador?: Exportador;
+
+  @OneToOne(() => Importador, (importador) => importador.pessoa)
+  importador?: Importador;
+
+  @OneToMany(() => PessoaContato, (contato) => contato.pessoa)
+  pContatos?: PessoaContato[]; 
+  
+  @OneToMany(() => PessoaEndereco, (endereco) => endereco.pessoa)
+  pEnderecos?: PessoaEndereco[]; 
+  
+  @OneToMany(() => PessoaTelefone, (telefone) => telefone.pessoa)
+  pTelefones?: PessoaTelefone[]; 
 }

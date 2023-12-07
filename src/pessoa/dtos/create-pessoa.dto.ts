@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { IsString } from "class-validator";
 
-export class CreatePessoaDTO {
+export class CreatePessoa {
   @IsString()
   nome: string;
 
@@ -15,21 +15,24 @@ export class CreatePessoaDTO {
   site: string;
   
   @IsString()
-  cliente: string;
+  ehColaborador: string;
 
   @IsString()
-  fornecedor: string;
+  ehCliente: string;
 
   @IsString()
-  importador: string;
+  ehFornecedor: string;
 
   @IsString()
-  exportador: string;
+  ehImportador: string;
 
   @IsString()
-  contador: string;
+  ehExportador: string;
 
   @IsString()
-  transportador: string;
+  ehContador: string;
+
+  @IsString()
+  ehTransportador: string;
 
 }

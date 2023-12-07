@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
  
-import { CidadeEntity } from "src/cidade/entities/cidade.entity";
-import { PessoaEntity } from "src/pessoa/entities/pessoa.entity";
+import { Cidade } from "src/cidade/entities/cidade.entity"; 
+import { Pessoa } from "src/pessoa/entities/pessoa.entity";
 import { Entity, PrimaryGeneratedColumn, 
     Column,
     CreateDateColumn,
@@ -11,7 +11,7 @@ import { Entity, PrimaryGeneratedColumn,
 } from "typeorm";
 
 @Entity({ name: 'pessoa_endereco' })
-export class PessoaEnderecoEntity {
+export class PessoaEndereco {
   @PrimaryGeneratedColumn('rowid')
   id: number;
 
@@ -39,11 +39,11 @@ export class PessoaEnderecoEntity {
   @UpdateDateColumn({ name: 'data_atualiza' })
   dataAtualiza: Date;
 
-  @ManyToOne(() => PessoaEntity, (pessoa) => pessoa.enderecos)
+  @ManyToOne(() => Pessoa, (pessoa) => pessoa.pEnderecos)
   @JoinColumn({name: 'id_pessoa', referencedColumnName: 'id'})
-  pessoa?: PessoaEntity;
+  pessoa?: Pessoa;
 
-  @ManyToOne(() => CidadeEntity, (cidade) => cidade.enderecos)
+  @ManyToOne(() => Cidade, (cidade) => cidade.eEnderecos)
   @JoinColumn({name: 'id_cidade', referencedColumnName: 'id'})
-  cidade?: CidadeEntity;
+  cidade?: Cidade;
 }

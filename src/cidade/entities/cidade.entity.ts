@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
  
-import { PaisEntity } from "src/pais/entities/pais.entity";
-import { PessoaEnderecoEntity } from "src/pessoa_endereco/entities/pessoa_endereco.entity";
+import { EmpresaEndereco } from "src/empresa_endereco/entities/empresa-endereco.entity";
+import { Pais} from "src/pais/entities/pais.entity";
+import { PessoaEndereco } from "src/pessoa_endereco/entities/pessoa_endereco.entity";
 import { Entity, PrimaryGeneratedColumn, 
     Column,
     CreateDateColumn,
@@ -12,7 +13,7 @@ import { Entity, PrimaryGeneratedColumn,
 } from "typeorm";
 
 @Entity({ name: 'cidade' })
-export class CidadeEntity {
+export class Cidade {
   @PrimaryGeneratedColumn('rowid')
   id: number;
 
@@ -28,10 +29,13 @@ export class CidadeEntity {
   @UpdateDateColumn({ name: 'data_atualiza' })
   dataAtualiza: Date;  
 
-  @OneToMany(() => PessoaEnderecoEntity, (endereco) => endereco.cidade)
-  enderecos?: PessoaEnderecoEntity[]; 
+  @OneToMany(() => PessoaEndereco, (endereco) => endereco.cidade)
+  pEnderecos?: PessoaEndereco[]; 
+ 
+  @OneToMany(() => EmpresaEndereco, (endereco) => endereco.cidade)
+  eEnderecos?: EmpresaEndereco[]; 
 
-  @ManyToOne(() => PaisEntity, (pais) => pais.cidades)
+  @ManyToOne(() => Pais, (pais) => pais.cidades)
   @JoinColumn({name: 'id_pais', referencedColumnName: 'id'})
-  pais?: PaisEntity;
+  pais?: Pais;
 }

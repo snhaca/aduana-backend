@@ -1,18 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateCliente {
   @IsNumber() 
   idPessoa: number;
   
-  @IsDate()
+  @IsString()
+  @IsOptional()
   desde: string;
 
   @IsNumber() 
   taxaDesconto: number;
   
   @IsNumber() 
-  limiteCredito: string;
+  limiteCredito: number;
 
   @IsString()
   @IsOptional()
