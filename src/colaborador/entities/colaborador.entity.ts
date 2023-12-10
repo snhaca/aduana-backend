@@ -50,16 +50,16 @@ import {
     @Column({ name: 'nacionalidade', nullable: false })
     nacionalidade: string;
    
-    @Column({ name: 'data_nascimento', nullable: true })
+    @Column({ name: 'data_nascimento', type: 'date', nullable: true })
     dataNascimento: Date;
   
-    @Column({ name: 'data_admissao', nullable: true })
+    @Column({ name: 'data_admissao', type: 'date', nullable: true })
     dataAdmissao: Date;  
      
-    @Column({ name: 'data_demissao' })
+    @Column({ name: 'data_demissao', type: 'date' })
     dataDemissao: Date;
   
-    @Column({ name: 'desde' })
+    @Column({ name: 'desde', type: 'date' })
     desde: Date;  
      
     @CreateDateColumn({ name: 'data_cadastro' })

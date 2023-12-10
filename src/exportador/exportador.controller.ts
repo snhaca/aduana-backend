@@ -10,11 +10,15 @@ import {
 import { CreateExportador } from './dtos/cretate-exportador.dto';
 import { Exportador } from './entities/exportador.entity';
 import { ExportadorService } from './exportador.service';
-import { ReturnExportador } from './dtos/return-exportador.dto';
+import { ReturnPessoa } from 'src/pessoa/dtos/return-pessoa.dto';
+import { PessoaService } from 'src/pessoa/pessoa.service';
 
 @Controller('exportador')
 export class ExportadorController {
-  constructor(private readonly exportadorService: ExportadorService) {}
+  constructor(
+    private readonly exportadorService: ExportadorService,
+    private readonly pessoaService: PessoaService,
+  ) {}
 
   @UsePipes(ValidationPipe)
   @Post()
@@ -23,11 +27,18 @@ export class ExportadorController {
   }
 
   @Get('/:idPessoa')
-  async findByPessoaId(
+  async findExportadorUsingRelations(
     @Param('idPessoa') idPessoa: number,
-  ): Promise<ReturnExportador> {
-    return new ReturnExportador(
-      await this.exportadorService.findByPessoaId(idPessoa),
+  ): Promise<ReturnPessoa> {
+    return new ReturnPessoa(
+      await this.pessoaService.findPessoaExportadorUsingRelations(idPessoa),
+    );
+  }
+
+  @Get()
+  async findAll(): Promise<ReturnPessoa[]> {
+    return (await this.pessoaService.findAllPessoaExportador()).map(
+      (pessoa) => new ReturnPessoa(pessoa),
     );
   }
 }

@@ -20,7 +20,7 @@ export class UsuarioService {
     private readonly usuarioRepository: Repository<Usuario>,
   ) {}
 
-  async create(create: CreateUsuario): Promise<Usuario> {
+  async create(create: CreateUsuario, tipoUsuario?: number): Promise<Usuario> {
     const usuario = await this.findByEmail(create.email).catch(() => undefined);
 
     if (usuario) {
@@ -33,7 +33,7 @@ export class UsuarioService {
 
     return this.usuarioRepository.save({
       ...create,
-      tipoUsuario: TipoUsuario.Usuario,
+      tipoUsuario: tipoUsuario ? tipoUsuario : TipoUsuario.Usuario,
       senha: passwordHashed,
     });
   }

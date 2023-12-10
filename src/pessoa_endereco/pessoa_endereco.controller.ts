@@ -14,7 +14,7 @@ import { PessoaEnderecoService } from './pessoa_endereco.service';
 import { CreatePessoaEndereco } from './dtos/create-pessoa-endereco.dto';
 import { ReturnPessoaEndereco } from './dtos/return-pessoa-endereco.dto';
 
-@Roles(TipoUsuario.Usuario, TipoUsuario.Admin)
+@Roles(TipoUsuario.Usuario, TipoUsuario.Admin, TipoUsuario.Root)
 @Controller('pessoa-endereco')
 export class PessoaEnderecoController {
   constructor(private readonly enderecoService: PessoaEnderecoService) {}

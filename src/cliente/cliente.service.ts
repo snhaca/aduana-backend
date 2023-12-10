@@ -1,7 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Cliente } from './entities/cliente.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PessoaService } from 'src/pessoa/pessoa.service';
 import { Repository } from 'typeorm';
 import { CreateCliente } from './dtos/create-cliente.dto';
 
@@ -10,35 +13,27 @@ export class ClienteService {
   constructor(
     @InjectRepository(Cliente)
     private readonly clienteRepository: Repository<Cliente>,
-    private readonly pessoaService: PessoaService,
   ) {}
 
   async create(create: CreateCliente): Promise<Cliente> {
-    await this.pessoaService.findClienteByIdPessoa(create.idPessoa);
+    const cliente = await this.findOne(create.idPessoa).catch(() => undefined);
+
+    if (cliente) {
+      throw new BadGatewayException('cliente já existe no sistema');
+    }
 
     return this.clienteRepository.save({ ...create });
   }
 
-  async findByIdPessoaUsingRelations(idPessoa: number): Promise<Cliente> {
+  async findOne(idPessoa: number): Promise<Cliente> {
     const cliente = await this.clienteRepository.findOne({
       where: {
         idPessoa,
       },
-      relations: {
-        pessoa: {
-          pEnderecos: {
-            cidade: {
-              pais: true,
-            },
-          },
-          pContatos: true,
-          pTelefones: true,
-        },
-      },
     });
 
     if (!cliente) {
-      throw new NotFoundException(`Cliente: ${idPessoa} não encontrado`);
+      throw new NotFoundException(`Id Cliente: ${idPessoa} Não encontrado`);
     }
 
     return cliente;

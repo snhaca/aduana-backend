@@ -9,23 +9,22 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateInstrucao } from './dto/create-instrucao.dto';
+import { CreateInstrucaoDto } from './dto/create-instrucao.dto';
 import { ReturnInstrucaoDto } from './dto/return-instrucao.dto';
 import { Instrucao } from './entities/instrucao.entity';
 import { InstrucaoService } from './instrucao.service';
 import { Roles } from 'src/decorators/roles.decorator';
 import { TipoUsuario } from 'src/usuario/enum/tipo-usuario.enum';
-import { DeleteResult } from 'typeorm';
 import { UpdateInstrucao } from './dto/update-instrucao.dto';
 
-@Roles(TipoUsuario.Usuario, TipoUsuario.Admin)
+@Roles(TipoUsuario.Usuario, TipoUsuario.Admin, TipoUsuario.Root)
 @Controller('instrucao')
 export class InstrucaoController {
   constructor(private readonly instrucaoService: InstrucaoService) {}
 
   @UsePipes(ValidationPipe)
   @Post()
-  async create(@Body() create: CreateInstrucao): Promise<Instrucao> {
+  async create(@Body() create: CreateInstrucaoDto): Promise<Instrucao> {
     return this.instrucaoService.create(create);
   }
 
@@ -50,13 +49,18 @@ export class InstrucaoController {
     );
   }
 
-  @Roles(TipoUsuario.Admin)
+  // @Roles(TipoUsuario.Admin, TipoUsuario.Root)
+  // @Delete('/:id')
+  // async delete(@Param('id') id: number): Promise<DeleteResult> {
+  //   return this.instrucaoService.delete(id);
+  // }
+
   @Delete('/:id')
-  async delete(@Param('id') id: number): Promise<DeleteResult> {
+  async delete(@Param('id') id: number) {
     return this.instrucaoService.delete(id);
   }
 
-  @Roles(TipoUsuario.Admin)
+  @Roles(TipoUsuario.Admin, TipoUsuario.Root)
   @UsePipes(ValidationPipe)
   @Put('/:id')
   async update(

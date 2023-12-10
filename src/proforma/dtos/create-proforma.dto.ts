@@ -14,7 +14,7 @@ export class CreateProformaDto {
   cambioCompra: number;
 
   @IsNumber()
-  cif: string;
+  cif: number;
 
   @IsNumber()
   cifMzn: number;

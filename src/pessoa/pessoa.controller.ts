@@ -14,18 +14,18 @@ import { ReturnPessoa } from './dtos/return-pessoa.dto';
 
 @Controller('pessoa')
 export class PessoaController {
-  constructor(private readonly pessoaoService: PessoaService) {}
+  constructor(private readonly pessoaService: PessoaService) {}
 
   @UsePipes(ValidationPipe)
   @Post()
   async create(@Body() create: CreatePessoa): Promise<Pessoa> {
-    return this.pessoaoService.create(create);
+    return this.pessoaService.create(create);
   }
 
   @Get()
   async findAll(): Promise<ReturnPessoa[]> {
-    return (await this.pessoaoService.findAll()).map(
-      (pessoaoEntity) => new ReturnPessoa(pessoaoEntity),
+    return (await this.pessoaService.findAll()).map(
+      (pessoa) => new ReturnPessoa(pessoa),
     );
   }
 
@@ -34,7 +34,16 @@ export class PessoaController {
     @Param('idPessoa') idPessoa: number,
   ): Promise<ReturnPessoa> {
     return new ReturnPessoa(
-      await this.pessoaoService.findOneUsingRelations(idPessoa),
+      await this.pessoaService.findOneUsingRelations(idPessoa),
+    );
+  }
+
+  @Get('/cliente/:idPessoa')
+  async findClienteUsingRelations(
+    @Param('idPessoa') idPessoa: number,
+  ): Promise<ReturnPessoa> {
+    return new ReturnPessoa(
+      await this.pessoaService.findPessoaClienteUsingRelations(idPessoa),
     );
   }
 }

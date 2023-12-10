@@ -10,26 +10,35 @@ import {
 import { Importador } from './entities/importador.entity';
 import { CreateImportador } from './dtos/create-importador.dto';
 import { ImportadorService } from './importador.service';
-import { ReturnImportador } from './dtos/return-importador.dto';
+import { ReturnPessoa } from 'src/pessoa/dtos/return-pessoa.dto';
+import { PessoaService } from 'src/pessoa/pessoa.service';
 
 @Controller('importador')
 export class ImportadorController {
-  constructor(private readonly importadorService: ImportadorService) {}
+  constructor(
+    private readonly importadorService: ImportadorService,
+    private readonly pessoaService: PessoaService,
+  ) {}
 
   @UsePipes(ValidationPipe)
   @Post()
-  async createImportador(
-    @Body() create: CreateImportador,
-  ): Promise<Importador> {
+  async create(@Body() create: CreateImportador): Promise<Importador> {
     return this.importadorService.create(create);
   }
 
   @Get('/:idPessoa')
-  async findByIdPessoa(
+  async findImportadorUsingRelations(
     @Param('idPessoa') idPessoa: number,
-  ): Promise<ReturnImportador> {
-    return new ReturnImportador(
-      await this.importadorService.findByIdPessoa(idPessoa),
+  ): Promise<ReturnPessoa> {
+    return new ReturnPessoa(
+      await this.pessoaService.findPessoaImportadorUsingRelations(idPessoa),
+    );
+  }
+
+  @Get()
+  async findAll(): Promise<ReturnPessoa[]> {
+    return (await this.pessoaService.findAllPessoaImportador()).map(
+      (pessoa) => new ReturnPessoa(pessoa),
     );
   }
 }

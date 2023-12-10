@@ -11,7 +11,7 @@ import { PessoaTelefone } from './entities/pessoa-telefone.entity';
 import { CreatePessoaTelefone } from './dtos/create-pessoa-telefone.dto';
 import { PessoaTelefoneService } from './pessoa_telefone.service';
 
-@Roles(TipoUsuario.Usuario, TipoUsuario.Admin)
+@Roles(TipoUsuario.Usuario, TipoUsuario.Admin, TipoUsuario.Root)
 @Controller('pessoa-telefone')
 export class PessoaTelefoneController {
   constructor(private readonly telefoneService: PessoaTelefoneService) {}

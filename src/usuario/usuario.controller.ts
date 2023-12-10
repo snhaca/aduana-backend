@@ -20,13 +20,19 @@ import { TipoUsuario } from './enum/tipo-usuario.enum';
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
+  @Roles(TipoUsuario.Root)
+  @Post('/admin')
+  async createAdmin(@Body() create: CreateUsuario): Promise<Usuario> {
+    return this.usuarioService.create(create, TipoUsuario.Admin);
+  }
+
   @UsePipes(ValidationPipe)
   @Post()
   async create(@Body() create: CreateUsuario): Promise<Usuario> {
     return this.usuarioService.create(create);
   }
 
-  @Roles(TipoUsuario.Admin)
+  @Roles(TipoUsuario.Admin, TipoUsuario.Root)
   @Get('/all')
   async findAll(): Promise<ReturnUsuario[]> {
     return (await this.usuarioService.findAll()).map(
@@ -34,7 +40,7 @@ export class UsuarioController {
     );
   }
 
-  @Roles(TipoUsuario.Admin)
+  @Roles(TipoUsuario.Admin, TipoUsuario.Root)
   @Patch()
   @UsePipes(ValidationPipe)
   async updatePasswordUser(
@@ -44,7 +50,7 @@ export class UsuarioController {
     return this.usuarioService.updatePasswordUser(update, id);
   }
 
-  @Roles(TipoUsuario.Admin, TipoUsuario.Usuario)
+  @Roles(TipoUsuario.Admin, TipoUsuario.Root, TipoUsuario.Usuario)
   @Get()
   async getInfoUser(@IdUsuario() id: number): Promise<ReturnUsuario> {
     return new ReturnUsuario(await this.usuarioService.findOne(id));

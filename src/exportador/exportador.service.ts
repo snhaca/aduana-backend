@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Exportador } from './entities/exportador.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PessoaService } from 'src/pessoa/pessoa.service';
@@ -14,31 +18,24 @@ export class ExportadorService {
   ) {}
 
   async create(create: CreateExportador): Promise<Exportador> {
-    await this.pessoaService.findExportadorByIdPessoa(create.idPessoa);
+    const cliente = await this.findOne(create.idPessoa).catch(() => undefined);
+
+    if (cliente) {
+      throw new BadGatewayException('cliente já existe no sistema');
+    }
 
     return this.exportadorRepository.save({ ...create });
   }
 
-  async findByPessoaId(idPessoa: number): Promise<Exportador> {
+  async findOne(idPessoa: number): Promise<Exportador> {
     const exportador = await this.exportadorRepository.findOne({
       where: {
         idPessoa,
       },
-      relations: {
-        pessoa: {
-          pEnderecos: {
-            cidade: {
-              pais: true,
-            },
-          },
-          pContatos: true,
-          pTelefones: true,
-        },
-      },
     });
 
     if (!exportador) {
-      throw new NotFoundException(`Exportador: ${idPessoa} não encontrado`);
+      throw new NotFoundException(`Id Exportador: ${idPessoa} Não encontrado`);
     }
 
     return exportador;

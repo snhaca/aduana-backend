@@ -1,6 +1,7 @@
 import { ReturnInstrucaoDto } from 'src/instrucao/dto/return-instrucao.dto';
 import { Fatura } from '../entities/fatura.entity';
 import { ReturnClienteDto } from 'src/cliente/dtos/return-cliente.dto';
+import { ReturnFaturaItemDto } from 'src/fatura-item/dtos/return-fatura-item.dto';
 
 export class ReturnFaturaDto {
   numero: number;
@@ -20,8 +21,11 @@ export class ReturnFaturaDto {
   observacao: string;
   usuarioCadastro: string;
   usuarioAtualiza: string;
+
   instrucao?: ReturnInstrucaoDto;
-  cliente: ReturnClienteDto;
+  cliente?: ReturnClienteDto;
+
+  items?: ReturnFaturaItemDto[];
 
   constructor(fatura: Fatura) {
     this.numero = fatura.numero;
@@ -47,6 +51,10 @@ export class ReturnFaturaDto {
       : undefined;
     this.cliente = fatura.cliente
       ? new ReturnClienteDto(fatura.cliente)
+      : undefined;
+
+    this.items = fatura.faturaItems
+      ? fatura.faturaItems.map((fatura) => new ReturnFaturaItemDto(fatura))
       : undefined;
   }
 }

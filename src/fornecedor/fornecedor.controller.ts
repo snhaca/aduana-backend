@@ -10,11 +10,15 @@ import {
 import { Fornecedor } from './entities/fornecedor.entity';
 import { CreateFornecedor } from './dtos/create-fornecedor.dto';
 import { FornecedorService } from './fornecedor.service';
-import { ReturnFornecedor } from './dtos/return-fornecedor.dto';
+import { ReturnPessoa } from 'src/pessoa/dtos/return-pessoa.dto';
+import { PessoaService } from 'src/pessoa/pessoa.service';
 
 @Controller('fornecedor')
 export class FornecedorController {
-  constructor(private readonly fornecedorService: FornecedorService) {}
+  constructor(
+    private readonly fornecedorService: FornecedorService,
+    private readonly pessoaService: PessoaService,
+  ) {}
 
   @UsePipes(ValidationPipe)
   @Post()
@@ -23,11 +27,18 @@ export class FornecedorController {
   }
 
   @Get('/:idPessoa')
-  async findByIdPessoa(
+  async findClienteUsingRelations(
     @Param('idPessoa') idPessoa: number,
-  ): Promise<ReturnFornecedor> {
-    return new ReturnFornecedor(
-      await this.fornecedorService.findByIdPessoa(idPessoa),
+  ): Promise<ReturnPessoa> {
+    return new ReturnPessoa(
+      await this.pessoaService.findPessoaExportadorUsingRelations(idPessoa),
+    );
+  }
+
+  @Get()
+  async findAll(): Promise<ReturnPessoa[]> {
+    return (await this.pessoaService.findAllPessoaFornecedor()).map(
+      (pessoa) => new ReturnPessoa(pessoa),
     );
   }
 }

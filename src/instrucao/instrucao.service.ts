@@ -1,18 +1,29 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateInstrucao } from './dto/create-instrucao.dto';
 import { Instrucao } from './entities/instrucao.entity';
 import { UpdateInstrucao } from './dto/update-instrucao.dto';
+import { CreateInstrucaoDto } from './dto/create-instrucao.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class InstrucaoService {
   constructor(
     @InjectRepository(Instrucao)
     private readonly instrucaoRepository: Repository<Instrucao>,
+    // private readonly clienteService: ClienteService,
+    // private readonly importService: ImportadorService,
+    // private readonly exportService: ExportadorService,
+    // private readonly regimeeService: RegimeAduaneiroService,
+    // private readonly servicoService: ServicoService,
+    // private readonly moedaService: MoedaService,
+    // private readonly terminalService: TerminalService,
+    // private readonly transpService: TransporteService,
   ) {}
 
-  async create(create: CreateInstrucao): Promise<Instrucao> {
+  async create(create: CreateInstrucaoDto): Promise<Instrucao> {
+    // await this.clienteService.findOne(create.idPessoa);
+    // await this.exportService.findOne(create.idCidade);
+
     const numeroz = (await this.instrucaoRepository.count()) + 1;
     const data = new Date();
     const ano = data.getFullYear();

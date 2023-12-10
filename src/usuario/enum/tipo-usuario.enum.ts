@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 export enum TipoUsuario {
     Usuario = 1,
-    Admin = 2,
+    Root = 2,
+    Admin = 3,
   }

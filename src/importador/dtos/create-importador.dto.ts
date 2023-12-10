@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateImportador {
     @IsNumber()
     idPessoa: number;
 
-    @IsDate()
+    @IsString()
     @IsOptional()
-    desde: Date;
+    desde: string;
 
     @IsString()
     observacao: string;

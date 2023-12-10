@@ -20,10 +20,10 @@ export class Exportador {
   @Column({ name: 'id_pessoa', nullable: false })
   idPessoa: number;
  
-  @CreateDateColumn({ name: 'desde', nullable: true })
+  @Column({ name: 'desde', type: 'date' })
   desde: Date;
  
-  @Column({ name: 'observacao', nullable: true })
+  @Column({ name: 'observacao'})
   observacao: string;
  
   @CreateDateColumn({ name: 'data_cadastro' })

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Pessoa } from './entities/pessoa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,6 +16,12 @@ export class PessoaService {
   ) {}
 
   async create(create: CreatePessoa): Promise<Pessoa> {
+    const pessoa = await this.findByEmail(create.email).catch(() => undefined);
+
+    if (pessoa) {
+      throw new BadGatewayException('email já existe no sistema');
+    }
+
     return this.pessoaRepository.save({
       ...create,
     });
@@ -19,30 +29,6 @@ export class PessoaService {
 
   async findAll(): Promise<Pessoa[]> {
     return this.pessoaRepository.find();
-  }
-
-  async findOneUsingRelations(id: number): Promise<Pessoa> {
-    const pessoa = await this.pessoaRepository.findOne({
-      where: {
-        id,
-      },
-      relations: {
-        colaborador: true,
-        pEnderecos: {
-          cidade: {
-            pais: true,
-          },
-        },
-        pContatos: true,
-        pTelefones: true,
-      },
-    });
-
-    if (!pessoa) {
-      throw new NotFoundException(`Id Pessoa: ${id} não encontrado`);
-    }
-
-    return pessoa;
   }
 
   async findOne(id: number): Promise<Pessoa> {
@@ -73,7 +59,35 @@ export class PessoaService {
     return pessoa;
   }
 
-  async findColaboradorByIdPessoa(id: number): Promise<Pessoa> {
+  async findOneUsingRelations(id: number): Promise<Pessoa> {
+    const pessoa = await this.pessoaRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        colaborador: true,
+        cliente: true,
+        exportador: true,
+        importador: true,
+        fornecedor: true,
+        pEnderecos: {
+          cidade: {
+            pais: true,
+          },
+        },
+        pContatos: true,
+        pTelefones: true,
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Id Pessoa: ${id} não encontrado`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaColaborador(id: number): Promise<Pessoa> {
     const pessoa = await this.pessoaRepository.findOne({
       where: {
         id,
@@ -88,7 +102,46 @@ export class PessoaService {
     return pessoa;
   }
 
-  async findClienteByIdPessoa(id: number): Promise<Pessoa> {
+  async findAllPessoaColaborador(): Promise<Pessoa[]> {
+    const pessoa = await this.pessoaRepository.find({
+      where: {
+        ehColaborador: 'S',
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Dados não encontrados`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaColaboradorUsingRelations(id: number): Promise<Pessoa> {
+    const pessoa = await this.pessoaRepository.findOne({
+      where: {
+        id,
+        ehColaborador: 'S',
+      },
+      relations: {
+        colaborador: true,
+        pEnderecos: {
+          cidade: {
+            pais: true,
+          },
+        },
+        pContatos: true,
+        pTelefones: true,
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Id Pessoa: ${id} não encontrado`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaCliente(id: number): Promise<Pessoa> {
     const pessoa = await this.pessoaRepository.findOne({
       where: {
         id,
@@ -103,7 +156,46 @@ export class PessoaService {
     return pessoa;
   }
 
-  async findExportadorByIdPessoa(id: number): Promise<Pessoa> {
+  async findAllPessoaCliente(): Promise<Pessoa[]> {
+    const pessoa = await this.pessoaRepository.find({
+      where: {
+        ehCliente: 'S',
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Dados não encontrados`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaClienteUsingRelations(id: number): Promise<Pessoa> {
+    const pessoa = await this.pessoaRepository.findOne({
+      where: {
+        id,
+        ehCliente: 'S',
+      },
+      relations: {
+        cliente: true,
+        pEnderecos: {
+          cidade: {
+            pais: true,
+          },
+        },
+        pContatos: true,
+        pTelefones: true,
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Id Pessoa: ${id} não encontrado`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaExportador(id: number): Promise<Pessoa> {
     const pessoa = await this.pessoaRepository.findOne({
       where: {
         id,
@@ -118,7 +210,46 @@ export class PessoaService {
     return pessoa;
   }
 
-  async findImportadorByIdPessoa(id: number): Promise<Pessoa> {
+  async findAllPessoaExportador(): Promise<Pessoa[]> {
+    const pessoa = await this.pessoaRepository.find({
+      where: {
+        ehExportador: 'S',
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Dados não encontrados`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaExportadorUsingRelations(id: number): Promise<Pessoa> {
+    const pessoa = await this.pessoaRepository.findOne({
+      where: {
+        id,
+        ehExportador: 'S',
+      },
+      relations: {
+        exportador: true,
+        pEnderecos: {
+          cidade: {
+            pais: true,
+          },
+        },
+        pContatos: true,
+        pTelefones: true,
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Id Pessoa: ${id} não encontrado`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaImportador(id: number): Promise<Pessoa> {
     const pessoa = await this.pessoaRepository.findOne({
       where: {
         id,
@@ -133,11 +264,89 @@ export class PessoaService {
     return pessoa;
   }
 
-  async findFornecedorByIdPessoa(id: number): Promise<Pessoa> {
+  async findAllPessoaImportador(): Promise<Pessoa[]> {
+    const pessoa = await this.pessoaRepository.find({
+      where: {
+        ehImportador: 'S',
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Dados não encontrados`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaImportadorUsingRelations(id: number): Promise<Pessoa> {
+    const pessoa = await this.pessoaRepository.findOne({
+      where: {
+        id,
+        ehImportador: 'S',
+      },
+      relations: {
+        importador: true,
+        pEnderecos: {
+          cidade: {
+            pais: true,
+          },
+        },
+        pContatos: true,
+        pTelefones: true,
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Id Pessoa: ${id} não encontrado`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaFornecedor(id: number): Promise<Pessoa> {
     const pessoa = await this.pessoaRepository.findOne({
       where: {
         id,
         ehFornecedor: 'S',
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Id Pessoa: ${id} não encontrado`);
+    }
+
+    return pessoa;
+  }
+
+  async findAllPessoaFornecedor(): Promise<Pessoa[]> {
+    const pessoa = await this.pessoaRepository.find({
+      where: {
+        ehFornecedor: 'S',
+      },
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException(`Dados não encontrados`);
+    }
+
+    return pessoa;
+  }
+
+  async findPessoaFornecedorUsingRelations(id: number): Promise<Pessoa> {
+    const pessoa = await this.pessoaRepository.findOne({
+      where: {
+        id,
+        ehFornecedor: 'S',
+      },
+      relations: {
+        fornecedor: true,
+        pEnderecos: {
+          cidade: {
+            pais: true,
+          },
+        },
+        pContatos: true,
+        pTelefones: true,
       },
     });
 

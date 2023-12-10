@@ -11,7 +11,7 @@ import { PessoaContato } from './entities/pessoa-contato.entity';
 import { Roles } from 'src/decorators/roles.decorator';
 import { TipoUsuario } from 'src/usuario/enum/tipo-usuario.enum';
 
-@Roles(TipoUsuario.Usuario, TipoUsuario.Admin)
+@Roles(TipoUsuario.Usuario, TipoUsuario.Admin, TipoUsuario.Root)
 @Controller('pessoa-contato')
 export class PessoaContatoController {
   constructor(private readonly contatoService: PessoaContatoService) {}
